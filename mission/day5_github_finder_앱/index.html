@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>GitHub Finder</h1>
+    <div id="message"></div>
+    <h1>Search GitHub Users</h1>
+    <h2>Enter a username to fetch a user profile and repos</h2>
+    <div><input type="text" id="username" oninput="findUserName()" /></div>
+    <!-- user profile info -->
+    <div id="profile"></div>
+    <!-- Latest Repos -->
+    <div>
+      <h3>Latest Repos</h3>
+      <div id="repos">
+        <!-- <div>
+          <div>react-deploy-test</div>
+          <div>
+            <div>Stars: 1</div>
+            <div>Watchers: 1</div>
+            <div>Forks: 1</div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <script>
+      async function findUserName() {
+        const message = document.getElementById("message");
+        console.log(message);
+        message.innerHTML = "";
+        const username = document.getElementById("username");
+        if (username.value === "") {
+          message.innerHTML = "<div>아이디를 입력해주세요</div>";
+          return;
+        }
+        try {
+          const api = await fetch(
+            `https://api.github.com/search/users/${username.value}`
+          );
+
+          if (api.status !== 200) {
+            throw Error();
+          }
+          const data = await api.json().items;
+          document.getElementById("profile").innerHTML = `
+          <div>
+        <div>
+          <img
+            src="${data.avatar_url}"
+            alt="avatar"
+          />
+        </div>
+        <div>
+          <button>view Profile</button>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div>public Repos:${data.public_repos}</div>
+          <div>public Gists:${data.public_gists}</div>
+          <div>Followers:${data.followers}</div>
+          <div>Flollowing:${data.following}</div>
+        </div>
+
+        <div>
+          <div>Company : ${data.company}</div>
+          <div>Website/Blog : ${data.blog}</div>
+          <div>Location :${data.location}</div>
+          <div>Member Since :${data.created_at}</div>
+        </div>
+      </div>
+          `;
+          console.log(data);
+        } catch (error) {
+          message.innerHTML = "<div>User not found</div>";
+          console.log("error");
+        }
+      }
+    </script>
+  </body>
+</html>

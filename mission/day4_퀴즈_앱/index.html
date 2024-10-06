@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div
+    style="width: 300px; height: 200px; background: white; margin: 0 auto"
+    >
+        <div id="quiz"></div>
+        <div id="options"></div>
+        <div id="next"></div>
+      </div>
+    </div>
+    <script>
+      const quizExample = [
+        { content: "4+2", options: ["4", "6"], answer: 1 },
+        {
+          content: "3+2",
+          options: ["4", "22", "정답이 없습니다"],
+          answer: 2,
+        },
+        { content: "2+2", options: ["4", "22"], answer: 0 },
+      ];
+      let index = 0;
+      draw(index);
+
+      function createBtn(btnIndex) {
+        //배경색
+        document.querySelector("body").style.background =
+        btnIndex === quizExample[index].answer ? "green" : "red";
+       
+        //버튼 색
+        document
+        .querySelectorAll("#options button")
+        .forEach((button, i) => {
+            const color =
+            i === quizExample[index].answer ? "green" : "red";
+            button.style.background = color;
+        });
+
+       index === quizExample.length -1?index = 0:index++;
+
+        document.querySelector(
+        "#next"
+        ).innerHTML = `<button onClick="draw(${
+           index 
+        })">${index === 0 ? '재시작': '다음'}</button>`;
+        
+    }
+        
+
+      function draw(index) {
+        document.querySelector("#next").innerHTML = "";
+        document.querySelector("body").style.background = "gray";
+       
+        document.querySelector("#quiz").innerHTML = quizExample[index].content;
+
+        document.querySelector("#options").innerHTML = quizExample[
+          index
+        ].options
+          .map((option, btnIndex) => {
+            
+            return `<button onClick="createBtn(${btnIndex})">${option}</button>`;
+          })
+          .join("");
+      }
+    </script>
+  </body>
+</html>

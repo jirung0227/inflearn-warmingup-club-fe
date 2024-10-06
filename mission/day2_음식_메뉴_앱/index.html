@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Menu</title>
+  </head>
+  <body>
+    <h2>메가MGC커피의 엄선된 메뉴</h2>
+    <h1>MEGA MENU</h1>
+    <h3>※메뉴 이미지는 연출컷이라 실물과 다를 수 있습니다.</h3>
+    <div>
+      <button id="all">all</button>
+      <button id="coffee">커피</button>
+      <button id="tea">티</button>
+      <button id="ade_juice">에이드&주스</button>
+      <button id="smoothie_frappe">스무디&프라페</button>
+      <div id="content"></div>
+    </div>
+    <script>
+      const items = [
+        {
+          name: "Espresso",
+          price: 1.5,
+          type: "coffee",
+          imgUrl:
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.thespruceeats.com%2Fhow-to-make-an-espresso-766327&psig=AOvVaw0",
+        },
+        {
+          name: "Americano",
+          price: 2.0,
+          type: "coffee",
+        },
+        {
+          name: "Cappuccino",
+          price: 2.5,
+          type: "coffee",
+        },
+        {
+          name: "Latte",
+          price: 3.0,
+          type: "coffee",
+        },
+        {
+          name: "Mocha",
+          price: 3.5,
+          type: "coffee",
+        },
+        {
+          name: "Macchiato",
+          price: 4.0,
+          type: "coffee",
+        },
+        {
+          name: "Tea",
+          price: 2.0,
+          type: "tea",
+        },
+        {
+          name: "Hot Chocolate",
+          price: 2.5,
+          type: "tea",
+        },
+        {
+          name: "Chai Latte",
+          price: 3.0,
+          type: "tea",
+        },
+        {
+          name: "Matcha Latte",
+          price: 3.5,
+          type: "tea",
+        },
+        {
+          name: "London Fog",
+          price: 4.0,
+          type: "tea",
+        },
+        {
+          name: "Iced Tea",
+          price: 2.5,
+          type: "iced",
+        },
+        {
+          name: "Iced Coffee",
+          price: 3.0,
+          type: "iced",
+        },
+        {
+          name: "Iced Matcha",
+          price: 3.5,
+          type: "iced",
+        },
+        {
+          name: "Iced Chai",
+          price: 4.0,
+          type: "iced",
+        },
+        {
+          name: "Iced London Fog",
+          price: 4.5,
+          type: "iced",
+        },
+        {
+          name: "Muffin",
+          price: 2.0,
+          type: "pastry",
+        },
+        {
+          name: "Scone",
+          price: 2.5,
+          type: "pastry",
+        },
+        {
+          name: "Cookie",
+          price: 1.5,
+          type: "pastry",
+        },
+        {
+          name: "Brownie",
+          price: 2.0,
+          type: "pastry",
+        },
+        {
+          name: "Croissant",
+          price: 2.5,
+          type: "pastry",
+        },
+      ];
+
+      document.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          const menu = e.target.id;
+          //요소를 아래에 추가해주세요.
+
+          document.querySelector("#content").innerHTML = "";
+          const ul = document.createElement("ul");
+          const cateogy =
+            menu === "all" ? items : items.filter((item) => item.type === menu);
+
+          cateogy.map((item) => {
+            const li = document.createElement("li");
+            li.innerHTML = `${item.name} - $${item.price}`;
+            ul.appendChild(li);
+          });
+
+          document.querySelector("#content").appendChild(ul);
+        });
+      });
+    </script>
+  </body>
+</html>
