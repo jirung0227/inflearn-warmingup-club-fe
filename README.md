@@ -13,7 +13,7 @@
 - 따라하며 배우는 자바스크립트 A-Z
 - 따라하며 배우는 리액트 A-Z [19버전 반영]
   
-[1주차 발자국 🐾](**https://www.inflearn.com/blogs/8574**)
+[1주차 발자국 🐾](https://www.inflearn.com/blogs/8574)
 
 #### 학습 기간
 
