@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>비밀번호 생성하기!</h1>
+
+    <div style="display: flex">
+      <div>
+        <div>클릭해서 비밀번호를 복사합니다.</div>
+        <div id="password">
+          <!-- 생성 비밀번호 -->
+        </div>
+      </div>
+      <div>| <button>copy</button></div>
+    </div>
+    <hr />
+    <div>
+      <input type="number" min="5" max="70" placeholder="length" />
+    </div>
+    <div>
+      <h3>포함된 문자</h3>
+      <div>
+        <div>
+          <input type="checkbox" name="rules" id="number" />
+          <label for="number">Number(0-9)</label>
+        </div>
+        <div>
+          <input type="checkbox" name="rules" id="small-letters" />
+          <label for="small-letters">Small Letters(a-z)</label>
+        </div>
+        <div>
+          <input type="checkbox" name="rules" id="capital-letters" />
+          <label for="capital-letters">Capital Letters(A-Z)</label>
+        </div>
+        <div>
+          <input type="checkbox" name="rules" id="symbol" />
+          <label for="symbol">Symbols(@,!,#,$,&,%)</label>
+        </div>
+      </div>
+      <div>
+        <button>생성하기</button>
+      </div>
+      <div>---------------------------------------------</div>
+      <div>
+        <div>(i)</div>
+        <ul>
+          <li>최소 길이는 5입니다.</li>
+          <li>최대 길이는 70입니다.</li>
+          <li>강력한 비밀번호는 10-16자여야 합니다.</li>
+        </ul>
+      </div>
+    </div>
+    <script></script>
+  </body>
+</html>
