@@ -54,6 +54,23 @@
         </ul>
       </div>
     </div>
-    <script></script>
+    <script>
+      const inputField = document.querySelector('input[type="number"]');
+
+      inputField.addEventListener("input", () => {
+        if (Number(inputField.value) < Number(inputField.min)) {
+          inputField.setCustomValidity(
+            `값은 ${inputField.min}이상이어야 합니다.`
+          );
+        } else if (Number(inputField.value) > Number(inputField.max)) {
+          inputField.setCustomValidity(
+            `값은 ${inputField.max}이하여야 합니다.`
+          );
+        } else {
+          inputField.setCustomValidity(""); // 오류 메시지 제거
+        }
+        inputField.reportValidity(); // 브라우저에 오류 메시지 표시 요청
+      });
+    </script>
   </body>
 </html>
