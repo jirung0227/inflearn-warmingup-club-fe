@@ -25,24 +25,34 @@
       <h3>포함된 문자</h3>
       <div>
         <div>
-          <input type="checkbox" name="rules" id="number" />
+          <input type="checkbox" name="rules" id="number" value="number" />
           <label for="number">Number(0-9)</label>
         </div>
         <div>
-          <input type="checkbox" name="rules" id="small-letters" />
+          <input
+            type="checkbox"
+            name="rules"
+            id="small-letters"
+            value="smallLetters"
+          />
           <label for="small-letters">Small Letters(a-z)</label>
         </div>
         <div>
-          <input type="checkbox" name="rules" id="capital-letters" />
+          <input
+            type="checkbox"
+            name="rules"
+            id="capital-letters"
+            value="capitalLetters"
+          />
           <label for="capital-letters">Capital Letters(A-Z)</label>
         </div>
         <div>
-          <input type="checkbox" name="rules" id="symbol" />
+          <input type="checkbox" name="rules" id="symbol" value="symbols" />
           <label for="symbol">Symbols(@,!,#,$,&,%)</label>
         </div>
       </div>
       <div>
-        <button>생성하기</button>
+        <button onclick="generatePassword()">생성하기</button>
       </div>
       <div>---------------------------------------------</div>
       <div>
@@ -55,9 +65,23 @@
       </div>
     </div>
     <script>
+      const rules = {
+        number: "0123456789",
+        smallLetters: "abcdefghijklmnopqrstuvwxyz",
+        capitalLetters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+        symbols: "!@#$&%",
+      };
+
+      const password = document.querySelector("#password");
+
       const inputField = document.querySelector('input[type="number"]');
 
       inputField.addEventListener("input", () => {
+        checkInputRange();
+      });
+
+      function checkPasswordInputRange() {
+        let check = false;
         if (Number(inputField.value) < Number(inputField.min)) {
           inputField.setCustomValidity(
             `값은 ${inputField.min}이상이어야 합니다.`
@@ -68,9 +92,37 @@
           );
         } else {
           inputField.setCustomValidity(""); // 오류 메시지 제거
+          check = true;
         }
         inputField.reportValidity(); // 브라우저에 오류 메시지 표시 요청
-      });
+      }
+
+      function generatePassword() {
+        if (!checkPasswordInputRange()) {
+          alert("5~70 패스워드 길이를 입력해주세요.");
+          return;
+        }
+
+        // @todo 체크 박스 체크 여부 확인
+
+        const passwordLength = Number(inputField.value);
+
+        const rulesCheckboxValue = document.querySelectorAll(
+          'input[name="rules"]:checked'
+        );
+
+        // 선택된 목록에서 value 찾기
+        let characterPool = "";
+        rulesCheckboxValue.forEach((el) => {
+          characterPool += rules[el.value];
+        });
+        let result = "";
+        for (let i = 0; i < passwordLength; i++) {
+          result +=
+            characterPool[Math.floor(Math.random() * characterPool.length)];
+        }
+        password.innerText = result;
+      }
     </script>
   </body>
 </html>
