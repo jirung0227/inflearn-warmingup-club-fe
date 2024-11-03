@@ -25,7 +25,13 @@
       <h3>포함된 문자</h3>
       <div>
         <div>
-          <input type="checkbox" name="rules" id="number" value="number" />
+          <input
+            type="checkbox"
+            name="rules"
+            id="number"
+            value="number"
+            checked
+          />
           <label for="number">Number(0-9)</label>
         </div>
         <div>
@@ -73,14 +79,13 @@
       };
 
       const password = document.querySelector("#password");
-
       const inputField = document.querySelector('input[type="number"]');
-
+      inputField.value = "5";
       inputField.addEventListener("input", () => {
         checkInputRange();
       });
 
-      function checkPasswordInputRange() {
+      function checkInputRange() {
         let check = false;
         if (Number(inputField.value) < Number(inputField.min)) {
           inputField.setCustomValidity(
@@ -95,21 +100,24 @@
           check = true;
         }
         inputField.reportValidity(); // 브라우저에 오류 메시지 표시 요청
+        return check;
       }
 
       function generatePassword() {
-        if (!checkPasswordInputRange()) {
+        if (!checkInputRange()) {
           alert("5~70 패스워드 길이를 입력해주세요.");
           return;
         }
-
-        // @todo 체크 박스 체크 여부 확인
-
         const passwordLength = Number(inputField.value);
 
         const rulesCheckboxValue = document.querySelectorAll(
           'input[name="rules"]:checked'
         );
+
+        if (rulesCheckboxValue.length === 0) {
+          alert("패스워드 규칙을 하나 이상 선택해주세요.");
+          return;
+        }
 
         // 선택된 목록에서 value 찾기
         let characterPool = "";
