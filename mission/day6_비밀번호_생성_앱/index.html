@@ -11,16 +11,24 @@
     <div style="display: flex">
       <div>
         <div>클릭해서 비밀번호를 복사합니다.</div>
-        <div id="password">
-          <!-- 생성 비밀번호 -->
+        <div style="display: flex">
+          <div
+            id="password"
+            style="width: 100%; height: 20px; border: 1px solid"
+          >
+            <!-- 생성 비밀번호 -->
+          </div>
+          <button onclick="copyPassword()">copy</button>
         </div>
       </div>
-      <div>| <button>copy</button></div>
     </div>
+    <div></div>
     <hr />
     <div>
+      <h3>비밀번호 길이</h3>
       <input type="number" min="5" max="70" placeholder="length" />
     </div>
+    <div>---------------------------------------------</div>
     <div>
       <h3>포함된 문자</h3>
       <div>
@@ -40,6 +48,7 @@
             name="rules"
             id="small-letters"
             value="smallLetters"
+            checked
           />
           <label for="small-letters">Small Letters(a-z)</label>
         </div>
@@ -49,11 +58,18 @@
             name="rules"
             id="capital-letters"
             value="capitalLetters"
+            checked
           />
           <label for="capital-letters">Capital Letters(A-Z)</label>
         </div>
         <div>
-          <input type="checkbox" name="rules" id="symbol" value="symbols" />
+          <input
+            type="checkbox"
+            name="rules"
+            id="symbol"
+            value="symbols"
+            checked
+          />
           <label for="symbol">Symbols(@,!,#,$,&,%)</label>
         </div>
       </div>
@@ -79,8 +95,9 @@
       };
 
       const password = document.querySelector("#password");
+
       const inputField = document.querySelector('input[type="number"]');
-      inputField.value = "5";
+      inputField.value = "10";
       inputField.addEventListener("input", () => {
         checkInputRange();
       });
@@ -101,6 +118,23 @@
         }
         inputField.reportValidity(); // 브라우저에 오류 메시지 표시 요청
         return check;
+      }
+
+      function copyPassword() {
+        if (password.innerText === "") {
+          alert("생성된 비밀번호가 없습니다.");
+          return;
+        }
+
+        // 클립보드(clipboard) 짧은 시간 동안 해당 데이터를 저장하는 임시 저장소
+        navigator.clipboard
+          .writeText(password.innerText)
+          .then(() => {
+            console.log("텍스트가 클립보드에 복사되었습니다!");
+          })
+          .catch((err) => {
+            console.error("클립보드 복사 중 오류가 발생했습니다:", err);
+          });
       }
 
       function generatePassword() {
