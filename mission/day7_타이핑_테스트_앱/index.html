@@ -28,7 +28,7 @@
       </div>
       <div class="info">
         <div>TIMES</div>
-        <div><span>20</span>S</div>
+        <div><span id="time-text"></span>S</div>
       </div>
       <div class="info">
         <div>%ACCURACY</div>
@@ -37,13 +37,74 @@
     </div>
 
     <!-- 타자 문장 -->
-    <div>새 게임을 시작하려면 다시 시작을 클릭하세요.</div>
+    <div id="sentence">아래를 클릭해서 게임을 시작하세요</div>
     <!-- 타자 입력창 -->
     <div>
-      <textarea style="width: 500px"></textarea>
+      <textarea
+        id="typingArea"
+        style="width: 500px"
+        onkeypress="handleTextInput()"
+      ></textarea>
     </div>
-    <div>
-      <button>다시 시작</button>
-    </div>
+    <div id="end"></div>
+    <script>
+      const time = document.querySelector("#time-text");
+      const sentence = document.querySelector("#sentence");
+      const targetSentence = [
+        "The quick brown fox jumps over the lazy dog",
+        "The five boxing wizards jump quickly",
+        "Pack my box with five dozen liquor jugs",
+      ];
+      const typingArea = document.querySelector("#typingArea");
+      const end = document.querySelector("#end");
+
+      function setupGame() {
+        time.innerText = 5;
+        sentence.innerText = "아래를 클릭해서 게임을 시작하세요";
+        typingArea.value = "";
+      }
+
+      function startGame(params) {
+        const timer = setInterval(() => {
+          if (parseInt(time.innerText) === 0) {
+            clearInterval(timer);
+
+            sentence.innerText = "새 게임을 시작하려면 다시 시작을 클릭하세요.";
+            typingArea.disabled = true;
+            const restartBtns = end.appendChild(
+              document.createElement("button")
+            );
+
+            restartBtns.innerText = "다시 시작";
+            restartBtns.onclick = () => {
+              end.removeChild(restartBtns);
+              typingArea.disabled = false;
+              setupGame();
+              startGame();
+            };
+            return;
+          }
+          time.innerText = parseInt(time.innerText) - 1;
+        }, 1000);
+      }
+
+      function handleTextInput() {
+        const index = sentence.innerText.indexOf(typingArea.value);
+        if (index > -1) {
+          sentence.innerHTML = `<span style="color:blue">${sentence.innerText.slice(
+            0,
+            index + typingArea.value.length
+          )}</span>${sentence.innerText.slice(
+            index + typingArea.value.length
+          )}`;
+        }
+      }
+
+      setupGame();
+      typingArea.onclick = () => {
+        startGame();
+        sentence.innerHTML = targetSentence[0];
+      };
+    </script>
   </body>
 </html>
