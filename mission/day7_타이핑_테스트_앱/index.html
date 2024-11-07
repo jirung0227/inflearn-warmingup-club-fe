@@ -14,17 +14,17 @@
   <body>
     <title>타이핑 스피드 측정</title>
     <div style="display: flex; margin-bottom: 20px">
-      <div class="info">
+      <div class="info" id="wpm">
         <div>WPM</div>
         <div>0</div>
       </div>
-      <div class="info">
+      <div class="info" id="cpm">
         <div>CPM</div>
         <div>0</div>
       </div>
       <div class="info">
         <div>ERRORS</div>
-        <div>0</div>
+        <div id="error-text">0</div>
       </div>
       <div class="info">
         <div>TIMES</div>
@@ -32,7 +32,7 @@
       </div>
       <div class="info">
         <div>%ACCURACY</div>
-        <div>100</div>
+        <div id="accuracy-text">100</div>
       </div>
     </div>
 
@@ -43,68 +43,156 @@
       <textarea
         id="typingArea"
         style="width: 500px"
-        onkeypress="handleTextInput()"
+        oninput="handleTextInput()"
       ></textarea>
     </div>
     <div id="end"></div>
     <script>
-      const time = document.querySelector("#time-text");
+      const wpm = document.querySelector("#wpm");
+      const cpm = document.querySelector("#cpm");
+
+      const timeTxt = document.querySelector("#time-text");
+      const accuracyTxt = document.querySelector("#accuracy-text");
+
       const sentence = document.querySelector("#sentence");
+
       const targetSentence = [
         "The quick brown fox jumps over the lazy dog",
         "The five boxing wizards jump quickly",
         "Pack my box with five dozen liquor jugs",
       ];
-      const typingArea = document.querySelector("#typingArea");
-      const end = document.querySelector("#end");
 
-      function setupGame() {
-        time.innerText = 5;
-        sentence.innerText = "아래를 클릭해서 게임을 시작하세요";
-        typingArea.value = "";
+      let targetIndex = 0;
+
+      let totalCharacters = 0;
+      for (i of targetSentence) {
+        totalCharacters += i.length;
       }
 
-      function startGame(params) {
-        const timer = setInterval(() => {
-          if (parseInt(time.innerText) === 0) {
-            clearInterval(timer);
+      const typingArea = document.querySelector("#typingArea");
+      const end = document.querySelector("#end");
+      const error = document.querySelector("#error-text");
 
-            sentence.innerText = "새 게임을 시작하려면 다시 시작을 클릭하세요.";
-            typingArea.disabled = true;
-            const restartBtns = end.appendChild(
-              document.createElement("button")
-            );
+      let timer = null;
+      let totalError = 0;
 
-            restartBtns.innerText = "다시 시작";
-            restartBtns.onclick = () => {
-              end.removeChild(restartBtns);
-              typingArea.disabled = false;
-              setupGame();
-              startGame();
-            };
+      // 초기화
+      setupGame();
+
+      // 타이핑창 클릭 이벤트
+      typingArea.onclick = () => {
+        // 게임 시작
+        startGame();
+        // 제시된 문장 출력
+        sentence.innerText = `${targetSentence[targetIndex]}`;
+      };
+
+      /**
+       * 게임을 시작하기 위한 초기화 함수
+       */
+      function setupGame() {
+        timeTxt.innerText = 100;
+        error.innerText = 0;
+        sentence.innerText = "아래를 클릭해서 게임을 시작하세요";
+        typingArea.value = "";
+        wpm.style = "display: none";
+        cpm.style = "display: none";
+      }
+
+      /**
+       * 게임을 시작하는 함수
+       */
+      function startGame() {
+        timer = setInterval(() => {
+          if (parseInt(timeTxt.innerText) === 0) {
+            // 게임 종료
+            finishGame();
+
             return;
           }
-          time.innerText = parseInt(time.innerText) - 1;
+          // 1초마다 시간을 1초씩 감소
+          timeTxt.innerText = parseInt(timeTxt.innerText) - 1;
         }, 1000);
       }
 
-      function handleTextInput() {
-        const index = sentence.innerText.indexOf(typingArea.value);
-        if (index > -1) {
-          sentence.innerHTML = `<span style="color:blue">${sentence.innerText.slice(
-            0,
-            index + typingArea.value.length
-          )}</span>${sentence.innerText.slice(
-            index + typingArea.value.length
-          )}`;
-        }
+      /**
+       * 게임을 종료하는 함수
+       */
+      function finishGame() {
+        //타이머 종료
+        if (timer) clearInterval(timer);
+
+        // targetSentence index 초기화
+        targetIndex = 0;
+
+        // wpm, cpm 활성화
+        wpm.style = "display: block";
+        cpm.style = "display: block";
+
+        sentence.innerText = "새 게임을 시작하려면 다시 시작을 클릭하세요.";
+        typingArea.disabled = true;
+
+        // 다시 시작 버튼 생성
+        const restartBtns = end.appendChild(document.createElement("button"));
+        restartBtns.innerText = "다시 시작";
+
+        // 다시 시작 버튼 클릭 이벤트
+        restartBtns.onclick = () => {
+          // 다시 시작 버튼 제거
+          end.removeChild(restartBtns);
+          // 타이핑창 비활성화
+          typingArea.disabled = false;
+          setupGame();
+          startGame();
+        };
       }
 
-      setupGame();
-      typingArea.onclick = () => {
-        startGame();
-        sentence.innerHTML = targetSentence[0];
-      };
+      /**
+       * 타이핑 입력을 처리하는 함수
+       */
+      function handleTextInput() {
+        const sentenceText = sentence.innerText;
+        const typingText = typingArea.value;
+        let errorCnt = 0;
+        let rememberText = "";
+        let count =
+          typingText.length > sentenceText.length
+            ? sentenceText.length
+            : typingText.length;
+
+        for (let i = 0; i < count; i++) {
+          const check = document.createElement("span");
+          if (typingText[i] === sentenceText[i]) {
+            check.style.color = "blue";
+            check.innerText = sentenceText[i];
+          } else {
+            check.style.color = "red";
+            check.innerText = sentenceText[i];
+            errorCnt++;
+          }
+          rememberText += check.outerHTML;
+        }
+        sentence.innerHTML =
+          rememberText + sentenceText.slice(typingText.length);
+        error.innerText = totalError + errorCnt;
+
+        accuracyTxt.innerText = Math.floor(
+          ((totalCharacters - (totalError + errorCnt)) / totalCharacters) * 100
+        );
+
+        if (typingText.length > sentenceText.length) {
+          if (targetIndex === targetSentence.length - 1) {
+            finishGame();
+            return;
+          }
+
+          totalError += errorCnt;
+          targetIndex++;
+          sentence.innerText = `${targetSentence[targetIndex]}`;
+          typingArea.value = "";
+          return;
+        }
+      }
     </script>
   </body>
 </html>
