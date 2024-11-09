@@ -57,24 +57,22 @@
       const sentence = document.querySelector("#sentence");
 
       const targetSentence = [
-        "The quick brown fox jumps over the lazy dog",
-        "The five boxing wizards jump quickly",
+        "he realized what was happening and told the others.",
+        "And in the end it turned out that the creature was her grandfather",
         "Pack my box with five dozen liquor jugs",
       ];
 
       let targetIndex = 0;
-
-      let totalCharacters = 0;
-      for (i of targetSentence) {
-        totalCharacters += i.length;
-      }
 
       const typingArea = document.querySelector("#typingArea");
       const end = document.querySelector("#end");
       const error = document.querySelector("#error-text");
 
       let timer = null;
+      // 총 에러 수
       let totalError = 0;
+      // 총 입력된 문자 수
+      let tatalInputCharacter = 0;
 
       // 초기화
       setupGame();
@@ -153,6 +151,7 @@
       function handleTextInput() {
         const sentenceText = sentence.innerText;
         const typingText = typingArea.value;
+
         let errorCnt = 0;
         let rememberText = "";
         let count =
@@ -176,9 +175,7 @@
           rememberText + sentenceText.slice(typingText.length);
         error.innerText = totalError + errorCnt;
 
-        accuracyTxt.innerText = Math.floor(
-          ((totalCharacters - (totalError + errorCnt)) / totalCharacters) * 100
-        );
+        let sumTotalInputCharacter = 0;
 
         if (typingText.length > sentenceText.length) {
           if (targetIndex === targetSentence.length - 1) {
@@ -187,11 +184,22 @@
           }
 
           totalError += errorCnt;
+          tatalInputCharacter += typingArea.value.length - 1;
           targetIndex++;
           sentence.innerText = `${targetSentence[targetIndex]}`;
           typingArea.value = "";
-          return;
+        } else {
+          sumTotalInputCharacter =
+            tatalInputCharacter + typingArea.value.length;
         }
+        // 다음 문장으로 넘어가 입력한 문자가 없을 때
+        if (sumTotalInputCharacter != 0) return;
+        // 정확도 계산
+        accuracyTxt.innerText = Math.floor(
+          ((sumTotalInputCharacter - (totalError + errorCnt)) /
+            sumTotalInputCharacter) *
+            100
+        );
       }
     </script>
   </body>
