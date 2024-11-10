@@ -16,11 +16,11 @@
     <div style="display: flex; margin-bottom: 20px">
       <div class="info" id="wpm">
         <div>WPM</div>
-        <div>0</div>
+        <div id="wpm-text">0</div>
       </div>
       <div class="info" id="cpm">
         <div>CPM</div>
-        <div>0</div>
+        <div id="cpm-text">0</div>
       </div>
       <div class="info">
         <div>ERRORS</div>
@@ -48,8 +48,11 @@
     </div>
     <div id="end"></div>
     <script>
+      const TIME_LIMIT = 20;
       const wpm = document.querySelector("#wpm");
       const cpm = document.querySelector("#cpm");
+      const wpmTxt = document.querySelector("#wpm-text");
+      const cpmTxt = document.querySelector("#cpm-text");
 
       const timeTxt = document.querySelector("#time-text");
       const accuracyTxt = document.querySelector("#accuracy-text");
@@ -72,7 +75,7 @@
       // 총 에러 수
       let totalError = 0;
       // 총 입력된 문자 수
-      let tatalInputCharacter = 0;
+      let totalInputCharacter = 0;
 
       // 초기화
       setupGame();
@@ -89,7 +92,7 @@
        * 게임을 시작하기 위한 초기화 함수
        */
       function setupGame() {
-        timeTxt.innerText = 100;
+        timeTxt.innerText = TIME_LIMIT;
         error.innerText = 0;
         sentence.innerText = "아래를 클릭해서 게임을 시작하세요";
         typingArea.value = "";
@@ -122,6 +125,16 @@
 
         // targetSentence index 초기화
         targetIndex = 0;
+        let sumTotalInputCharacter =
+          totalInputCharacter + typingArea.value.length;
+        // wpm, cpm 값 계산
+        wpmTxt.innerText = Math.floor(
+          ((sumTotalInputCharacter - parseInt(error.innerText)) / 5) *
+            (60 / TIME_LIMIT)
+        );
+        cpmTxt.innerText = Math.floor(
+          sumTotalInputCharacter * (60 / TIME_LIMIT)
+        );
 
         // wpm, cpm 활성화
         wpm.style = "display: block";
@@ -184,16 +197,16 @@
           }
 
           totalError += errorCnt;
-          tatalInputCharacter += typingArea.value.length - 1;
+          totalInputCharacter += typingArea.value.length - 1;
           targetIndex++;
           sentence.innerText = `${targetSentence[targetIndex]}`;
           typingArea.value = "";
+          return;
         } else {
           sumTotalInputCharacter =
-            tatalInputCharacter + typingArea.value.length;
+            totalInputCharacter + typingArea.value.length;
         }
-        // 다음 문장으로 넘어가 입력한 문자가 없을 때
-        if (sumTotalInputCharacter != 0) return;
+
         // 정확도 계산
         accuracyTxt.innerText = Math.floor(
           ((sumTotalInputCharacter - (totalError + errorCnt)) /
