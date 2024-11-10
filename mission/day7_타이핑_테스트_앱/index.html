@@ -108,6 +108,7 @@
         timer = setInterval(() => {
           if (parseInt(timeTxt.innerText) === 0) {
             // 게임 종료
+            console.log("게임 종료");
             finishGame();
 
             return;
@@ -144,19 +145,22 @@
 
         sentence.innerText = "새 게임을 시작하려면 다시 시작을 클릭하세요.";
 
-        // 다시 시작 버튼 생성
-        const restartBtns = end.appendChild(document.createElement("button"));
-        restartBtns.innerText = "다시 시작";
+        if (!document.querySelector("#restart-btn")) {
+          // 다시 시작 버튼 생성
+          const restartBtns = end.appendChild(document.createElement("button"));
+          restartBtns.innerText = "다시 시작";
+          restartBtns.id = "restart-btn";
 
-        // 다시 시작 버튼 클릭 이벤트
-        restartBtns.onclick = () => {
-          // 다시 시작 버튼 제거
-          end.removeChild(restartBtns);
-          // 타이핑창 비활성화
-          typingArea.disabled = false;
-          setupGame();
-          startGame();
-        };
+          // 다시 시작 버튼 클릭 이벤트
+          restartBtns.onclick = () => {
+            // 다시 시작 버튼 제거
+            end.removeChild(restartBtns);
+            // 타이핑창 비활성화
+            typingArea.disabled = false;
+            setupGame();
+            startGame();
+          };
+        }
       }
 
       /**
