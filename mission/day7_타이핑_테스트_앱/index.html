@@ -69,7 +69,7 @@
 
       const typingArea = document.querySelector("#typingArea");
       const end = document.querySelector("#end");
-      const error = document.querySelector("#error-text");
+      const errorTxt = document.querySelector("#error-text");
 
       let timer = null;
       // 총 에러 수
@@ -85,16 +85,24 @@
        */
       function setupGame() {
         timeTxt.innerText = TIME_LIMIT;
-        error.innerText = 0;
+        errorTxt.innerText = 0;
+        accuracyTxt.innerText = 100;
         sentence.innerText = "아래를 클릭해서 게임을 시작하세요";
         typingArea.value = "";
+
         wpm.style = "display: none";
         cpm.style = "display: none";
+
+        totalError = 0;
+        totalInputCharacter = 0;
+
+        timer = null;
 
         // 타이핑창 클릭 이벤트
         typingArea.onclick = () => {
           // 게임 시작
           typingArea.onclick = null;
+
           startGame();
           // 제시된 문장 출력
           sentence.innerText = `${targetSentence[targetIndex]}`;
@@ -108,7 +116,6 @@
         timer = setInterval(() => {
           if (parseInt(timeTxt.innerText) === 0) {
             // 게임 종료
-            console.log("게임 종료");
             finishGame();
 
             return;
@@ -124,7 +131,10 @@
       function finishGame() {
         //타이머 종료
         typingArea.disabled = true;
-        if (timer) clearInterval(timer);
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
 
         // targetSentence index 초기화
         targetIndex = 0;
@@ -132,7 +142,7 @@
           totalInputCharacter + typingArea.value.length;
         // wpm, cpm 값 계산
         wpmTxt.innerText = Math.floor(
-          ((sumTotalInputCharacter - parseInt(error.innerText)) / 5) *
+          ((sumTotalInputCharacter - parseInt(errorTxt.innerText)) / 5) *
             (60 / TIME_LIMIT)
         );
         cpmTxt.innerText = Math.floor(
@@ -158,7 +168,6 @@
             // 타이핑창 비활성화
             typingArea.disabled = false;
             setupGame();
-            startGame();
           };
         }
       }
@@ -191,7 +200,7 @@
         }
         sentence.innerHTML =
           rememberText + sentenceText.slice(typingText.length);
-        error.innerText = totalError + errorCnt;
+        errorTxt.innerText = totalError + errorCnt;
 
         let sumTotalInputCharacter = 0;
 
