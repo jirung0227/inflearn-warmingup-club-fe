@@ -211,6 +211,10 @@
           sumTotalInputCharacter =
             totalInputCharacter + typingArea.value.length;
         }
+        if (sumTotalInputCharacter === 0) {
+          accuracyTxt.innerText = 100;
+          return;
+        }
 
         // 정확도 계산
         accuracyTxt.innerText = Math.floor(
