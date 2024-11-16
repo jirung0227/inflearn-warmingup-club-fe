@@ -8,7 +8,7 @@ index.html밖에 없는 SPA에서 화면 변경은 어떻게 일어나요?
 
 HTML 5의 History API를 사용해서 가능
 
-![alt text](image-1.png)
+![alt text](./image/image-1.png)
 
 자바스크립트 영역에서 History API를 이용해서 현재 페이지 내에서 화면 이동이 일어난 것처럼 작동하게 해줌
 
@@ -18,7 +18,7 @@ React-Router-Dom -> History API 사용
 
 현재 페이지 내에서 화면 이동이 일어난 것 처럼 작동하게 해줌.
 
-![alt text](image-2.png)
+![alt text](./image/image-2.png)
 
 ## JSX 알아보기 (Javascript syntax extension)
 
@@ -30,7 +30,7 @@ React.createElement API를 사용해서 엘리먼트를 생성한 후(객체가 
 
 그리고 ReactDom.render 함수를 사용해서 실제 웹 브라우저에 그려줍니다.
 
-![alt text](image.png)
+![alt text](./image/image.png)
 
 **JSX는 createElement를 쉽게 사용하기 위해 사용**
 
