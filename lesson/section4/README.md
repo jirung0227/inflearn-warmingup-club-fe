@@ -156,3 +156,38 @@ unable to resolve dependency tree
 
 --legacy-peer-deps : 기존 버전 다 무시하고 일단 설치.
 --force : package-lock.json에 몇가지의 다른 의존 버전들을 추가하면서 설치.
+
+## TailWindCss란 무엇인가요?
+
+HTML 안에서, css 스타일을 만들 수 있게 해주는 CSS 프레임 워크 입니다.
+
+### CSS 프레임 워크는 무엇인가요?
+
+CSS 프레임 워크는 레이아웃 및 여러 컴포넌트 구성, 브라우저 호환성을 보장하는데 소요되는 시간을 최소화하기 위해 여러 웹 개발/디자인 프로젝트에 적용할 수 있는 CSS 파일 모음입니다.
+더 빠르게 애플리케이션을 스타일링 하는데 도움을 줍니다.
+
+**CSS FRAMEWORK 종류 for React JS**
+
+1. Material UI
+2. React Bootstrap
+3. Semantic UI
+4. Ant Design
+5. Materialize
+   ...
+
+### Tailwind CSS의 장점
+
+Tailwind CSS는 부트 스트랩과 비슷하게 m-1, flex와 같이 미리 세팅된 Uitility Class를 활용하는 방식으로 HTML에서 스타일링을 할 수 있다.
+
+1. 그러기에 빠른 스타일링 작업이 가능하며
+
+2. class 혹은 id 명을 작성하기 위한 고생을 하지 않아도 된다.
+3. 유틸리티 클래스가 익숙해지는 시간이 필요할 수 있지만 IntelliSense 플러그인이 제공되서 금방 익숙해질 수 있다.
+
+설치 명령어
+
+npm i taillwindcss postcss autoprefixer
+
+tailwind 초기 세팅 파일 설치 명령어
+
+npx tailwindcss init
