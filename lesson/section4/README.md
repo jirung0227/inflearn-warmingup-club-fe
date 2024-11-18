@@ -129,3 +129,30 @@ for (let {
   console.log("Name: " + n + ", Father: " + f);
 }
 ```
+
+## 참조 - 리액트 모듈 설치 시 나는 종속성(dependency) 에러 해결 방법
+
+리액트18 버전에서 라이브러리들을 설치할 때
+종속성에 관한 에러가 날 때가 많이 있습니다.
+
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+npm ERR! Found: react@18.1.0
+npm ERR! node_modules/react
+npm ERR! react@"^18.1.0" from the root project
+npm ERR! Could not resolve dependency:
+npm ERR! peer react@"^17.0.1" from react-dnd...
+
+[원인]
+
+unable to resolve dependency tree
+리액트 18 버전 라이브러리와 설치하려는 해당 라이브러리의 종속성이 안 맞기 때문입니다.
+
+[해결 방법]
+이럴 때는 여러가지 해결방법이 있는데
+첫 번째는 리액트 버전을 17로 낮추는 것인데 별로 좋은 방법은 아닙니다.
+다른 방법은 npm 대신에 yarn을 이용해서 yarn install로 종속성을 설치해주는 방법입니다.
+만약 yarn으로도 설치해도 안된다면 npm의 강제 설치 옵션으로 설치
+
+--legacy-peer-deps : 기존 버전 다 무시하고 일단 설치.
+--force : package-lock.json에 몇가지의 다른 의존 버전들을 추가하면서 설치.
