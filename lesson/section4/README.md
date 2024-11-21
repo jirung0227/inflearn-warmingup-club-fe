@@ -191,3 +191,37 @@ npm i taillwindcss postcss autoprefixer
 tailwind 초기 세팅 파일 설치 명령어
 
 npx tailwindcss init
+
+## Drag and Drop
+
+### 기능 구현 순서
+
+1. HTML 드래그 앤 드롭 API를 사용해 원하는 목록을 드래그 가능하게 만듭니다.
+
+2. 사용자가 드래그할 때 적절한 애니메이션을 줌.
+
+3. 사용자가 드래그를 멈췄는 지 확인.이때 여기에도 애니메이션을 줌.
+
+4. 클라이언트가 목록을 재정렬할 경우 항목의 위치를 새 항목으로 업데이트합니다.
+
+====> 이것을 쉽게 구현할 수 있게 도와주는 모듈이 react-beautiful-dnd
+
+### 필요 모듈 설치하기
+
+npm install react-beautiful-dnd --save
+
+provided object에는 스타일 지정 및 조회를 위한 속성이 포함되어 있습니다.
+
+![alt text](image-7.png)
+
+사용자가 요소를 드래그하는 경우 className 속성을 selected로 변경합니다. 나중에 스타일을 적용하는 데 사용할 것입니다.
+
+placeholder 속성은 목록에 빈 공간을 만듭니다. 이렇게 하면 드래그 작업이 자연스럽게 느껴질 것입니다.
+
+## 리액트 불변성
+
+상태를 변경할 수 없는 것
+
+기본적으로 js는 원시 타입에 대한 참조 및 값을 저장하기 위해 Call Stack 메모리 공간을 사용하지만 참조 타입의 경우 Heap이라는 별도의 메모리 공간을 사용합니다. 이 경우 Call Stack은 개체 및 배열 값이 아닌 메모리에만 Heap 메모리 참조 ID를 값으로 저장합니다.
+
+즉 참조타입은 불변성을 보장하지 않아 신경써줘야함.
