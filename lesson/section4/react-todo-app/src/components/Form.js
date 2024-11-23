@@ -4,6 +4,7 @@ export const Form = ({ value, setValue, handleSubmit }) => {
   const handleChange = (e) => {
     setValue(e.target.value);
   };
+  console.log("f");
 
   return (
     <form className='flex pt-2' onSubmit={(e) => handleSubmit(e)}>
