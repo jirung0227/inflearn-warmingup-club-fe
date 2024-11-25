@@ -244,3 +244,26 @@ placeholder 속성은 목록에 빈 공간을 만듭니다. 이렇게 하면 드
 ## Memoization 이란
 
 메모이제이션은 비용이 많이 드는 함수 호출의 결과를 저장하고 동일한 입력이 다시 발생할 때 캐시된 결과를 반환하여 컴퓨터 프로그램 속도를 높이는 데 주로 사용되는 최적화 기술입니다.
+
+```js
+function Component({ a, b }) {
+  const result = compute(a, b);
+  return <div>{result}</div>;
+}
+```
+
+Component내의 compute 함수가 만약 복잡한 연산을 수행하면 걸과값을 리턴하는데 오랜 시간이 걸리게 됩니다.
+
+이럴 시에 컴포넌트가 계속 리 렌더링 된다면 연산을 계속 수행하는데 오랜 시간이 걸려서 성능에 안 좋은 영향을 미치게 되며, UI 지연 현상도 일어나게 될 것 입니다.
+
+이러한 현상을 해결해주기 위해 useMemo 사용합니다.
+compute함수에 넘겨주는 a,b의 값이 이전과 동일하다면 컴포넌트가 리 렌더링 되더라도 연산을 다시 하지 않고 이전 렌더링 때 저장해두었던 값을 재활용하게 됩니다.
+
+## useMemo 적용하기
+
+```js
+function Component({ a, b }) {
+  const result = useMemo(() => compute(a, b), [a, b]);
+  return <div>{result}</div>;
+}
+```
