@@ -3,8 +3,12 @@ import React, { useState } from "react";
 import "./App.css";
 import { Form } from "./components/Form";
 import { Lists } from "./components/Lists";
+const initTodoData = localStorage.getItem("todoData");
+
 export default function App() {
-  const [todoData, setTodoData] = useState([]);
+  const [todoData, setTodoData] = useState(
+    initTodoData ? JSON.parse(initTodoData) : []
+  );
   const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
@@ -15,11 +19,16 @@ export default function App() {
       completed: false,
     };
     setTodoData((prev) => [...prev, newTodoData]);
+    localStorage.setItem(
+      "todoData",
+      JSON.stringify([...todoData, newTodoData])
+    );
     setValue("");
   };
 
   const handleRemoveClick = () => {
     setTodoData([]);
+    localStorage.setItem("todoData", JSON.stringify([]));
   };
 
   return (

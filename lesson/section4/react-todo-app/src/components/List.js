@@ -7,6 +7,8 @@ export const List = React.memo(
     const handleClick = (id) => {
       const newTodoData = todoData.filter((data) => data.id !== id);
       setTodoData(newTodoData);
+      // 객체나 배열을 저장해줄시에는 JSON.stringify()를 사용하여 문자열로 변환하여 저장해줘야한다.
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
     };
 
     const handleCompleChange = (id) => {
@@ -17,6 +19,7 @@ export const List = React.memo(
         return data;
       });
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify([newTodoData]));
     };
 
     const handleEditChange = (e) => {
@@ -32,6 +35,7 @@ export const List = React.memo(
         return data;
       });
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
       setIsEditing(false);
     };
 
