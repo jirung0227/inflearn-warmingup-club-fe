@@ -6,7 +6,6 @@ import { Lists } from "./components/Lists";
 export default function App() {
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
-  console.log("App");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,11 +18,16 @@ export default function App() {
     setValue("");
   };
 
+  const handleRemoveClick = () => {
+    setTodoData([]);
+  };
+
   return (
     <div className='flex items-center justify-center w-screen h-screen bg-blue-100'>
       <div className='w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg'>
         <div className='flex justify-between mb-3'>
           <h1 className='text-3xl font-bold '>할 일 목록</h1>
+          <button onClick={handleRemoveClick}>Delete All</button>
         </div>
         <div>
           <Lists todoData={todoData} setTodoData={setTodoData} />
