@@ -12,7 +12,7 @@
 
 - 따라하며 배우는 자바스크립트 A-Z
 - 따라하며 배우는 리액트 A-Z [19버전 반영]
-  
+
 [1주차 발자국 🐾](https://www.inflearn.com/blogs/8574)
 
 #### 학습 기간
@@ -23,3 +23,21 @@
 
 11.1(금) - 2기 러너가 한 자리에 모여 스터디를 마무리하는 자리입니다.
 
+학습 범위
+
+js
+Section 2 ~ 4
+Section 5 (1 ~ 8)
+Section 5 (9 ~ 17)
+Section 6 ~ 7
+Section 8 ~ 9
+Section 10
+
+리액트
+Section 2 ~ 4 11월 11일 ~ 11월 18일 1시간 30분 3일 정도?
+Section 5 ~ 6 9일정도?
+Section 7 ~ 8 3일 /여기까지
+Section 9 ~ 10 14일
+Section 11 ~ 13 8일
+
+3 + 9 + 3 + 14 + 8
