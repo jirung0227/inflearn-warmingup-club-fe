@@ -18,3 +18,10 @@ https://styled-components.com/docs
 ```
 npm i --save styled-components
 ```
+
+# Iframe
+
+HTML inline Frame 요소이며 inline frame의 약자입니다.
+
+효과적으로 **다른 HTML 페이지를 현재 페이지에 포함**시키는 중첩된 브라우저로
+iframe 요소를 이용하면 해당 웹 페이지 안에 어떠한 제한 없이 다른 페이지를 불러와서 삽입할 수 있습니다.
