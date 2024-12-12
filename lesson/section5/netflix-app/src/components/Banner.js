@@ -46,23 +46,24 @@ export const Banner = () => {
           backgroundSize: "cover",
         }}
       >
-        <div className='banner__contents'>
-          <h1 className='banner__title'>
-            {movie?.title || movie?.name || movie?.original_name}
-          </h1>
-          <div className='banner__buttons'>
-            <button
-              className='banner__button play'
-              onClick={() => setIsClicked(true)}
-            >
-              Play
-            </button>
-            <button className='banner__button info'>More Infomation</button>
+        <div className='banner--fadeBottom'>
+          <div className='banner__contents'>
+            <h1 className='banner__title'>
+              {movie?.title || movie?.name || movie?.original_name}
+            </h1>
+            <div className='banner__buttons'>
+              <button
+                className='banner__button play'
+                onClick={() => setIsClicked(true)}
+              >
+                Play
+              </button>
+              <button className='banner__button info'>More Infomation</button>
+            </div>
+            <h1 className='banner__description'>
+              {truncate(movie?.overview, 100)}
+            </h1>
           </div>
-          <h1 className='banner__description'>
-            {truncate(movie?.overview, 100)}
-          </h1>
-          <div className='banner--fadeBottom'></div>
         </div>
       </header>
     );
