@@ -245,7 +245,9 @@ DOM을 직접 선택해야 할 경우들
 
 useRef()를 이용해서 Ref 객체를 만들고, 이 객체를 특정 DOM에 ref 값으로 설정합니다. 이렇게 되면 Ref 객체의 .current 값이 특정 DOM을 가리키게 됩니다.
 
-```
+```js
 const ref = useRef();
-<div ref={ref}></div>
+<div ref={ref}></div>;
 ```
+
+## swiper 모듈을 이용한 터치 슬라이드 구현하기
