@@ -36,7 +36,18 @@ React Router DOM을 사용하면 웹 앱에서 동적 라우팅을 구현할 수
 이 하나의 템플릿에 자바스크립트를 이용해서 다른 컴포넌트를 이 index.html 템플릿에 넣으므로 페이지를 변경해주게 됩니다. 이 때 이 React Router Dom라이브러리가 새 컴포넌트로 라우팅/탐색을 하고 렌더링하는데 도움을 주게 됩니다.
 ![alt text](image-1.png)
 
-## BrowserRouter로 루트 컴포넌트 감싸주기
+# React Router dom API
+
+## 중첩 라우팅(Nested Routes)
+
+React Router의 가장 강력한 기능 중 하나
+
+### BrowserRouter
+
+HTML5 History API(pushState, replaceState 및 popstate 이벤트)를 사용하여 UI를
+URL과 동기화된 상태로 유지해줍니다.
+
+### BrowserRouter로 루트 컴포넌트 감싸주기
 
 ```js
 ReactDOM.render(
@@ -46,23 +57,17 @@ ReactDOM.render(
 );
 ```
 
-### BrowserRouter
-
-HTML5 History API(pushState, replaceState 및 popstate 이벤트)를 사용하여 UI를
-URL과 동기화된 상태로 유지해줍니다.
-
 ## 여러 컴포넌트 생성 및 라우트 정의하기
 
 ```js
-function App() {
-  return (
-    <div className='App'>
-      <Routes>
-        <Route path='/' element={<Home />} />
-      </Routes>
-    </div>
-  );
-}
+<BrowserRouter>
+  <Routes>
+    <Route path='/' element={<App />} />
+    <Route index element={<Home />} />
+    <Route path='teams' element={<Home />} />
+    <Route path=':teamId' element={<Home />} />
+  </Routes>
+</BrowserRouter>
 ```
 
 ### Routes
@@ -74,7 +79,7 @@ Router로 생성된 자식 컴포넌트 중에서 매칭되는 첫번째 Route�
 
 Route는 단일 경로를 만드는 데 사용됩니다. 두 가지 속성을 취합니다.
 
-path는 원한느 컴포넌트의 URL 경로를 지정
+path는 원하는 컴포넌트의 URL 경로를 지정
 element 경로에 맞게가 렌더링되어야 하는 컴포넌트를 지정
 
 ## <Link />를 이용해 경로를 이동하기
@@ -92,3 +97,116 @@ function Home() {
 ```
 
 Link 구성 요소는 HTML 앵커요소와 유사
+
+## Outlet
+
+자식 경로 요소를 렌더링하려면 부모 경로 요소에서 사용해야함.
+사용시 하위 경로가 렌더링될 때 중첨된 UI가 표시될 수 있습니다.
+부모 라우트가 정확히 일치하면 자식인덱스 라우트를 렌더링하거나 인덱스 라우트가 없으면 아무것도 렌더링하지 않습니다.
+react-router-dom에서 가져와서 사용.
+
+```js
+function App() {
+  return (
+    <div>
+      <nav>
+        <Link to='/'>Home</Link>
+        <Link to='teams'>Teams</Link>
+      </nav>
+      <div className='content'>
+        <Outlet />
+      </div>
+    </div>
+  );
+}
+```
+
+## useNavigate
+
+경로를 바꿔줍니다. navigate('/home') ===> localhost:3000/home으로 갑니다.
+
+```js
+import { useNavigate } from "react-router-dom";
+
+function SignupForm() {
+  let navigate = useNavigate();
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    await submitForm(event.target);
+    navigate("../success", { replace: true});
+  }
+
+  return <form >
+}
+```
+
+## useParams
+
+style 문법을 path 경로에 사용하였다면 useParams()로 읽을 수 있습니다.
+아래는 :invoiceId가 무엇인지 알기 위해 useParams를 사용
+
+```js
+import { Routes, Route, useParams } from "react-router-dom";
+
+function App() {
+  return (
+    <Routes>
+      <Route path='invoices/:invoiceId' element={<Invoice />} />
+    </Routes>
+  );
+}
+
+function Invoice() {
+  let params = useParams();
+  return <h1>Invoice {params.invoiceId}</h1>;
+}
+```
+
+## useLocation
+
+이 Hooks는 현재 위치 객체를 반환합니다.
+이것은 현재 위치가 변경될 때마다 일부 side effect를 수행하려는 경우에 유용할 수 있습니다.
+
+```js
+import * as React from 'react;
+import { useLocation } from 'react-router-dom';
+
+fuction App() {
+  let location = useLocation();
+
+  React.useEffect(()=>{
+    ga('send','pageview');
+  },[location]);
+}
+```
+
+## useRoutes
+
+useRoutes Hooks는 와 <Routes>와 기능적으로 동일하지만 <Route> 요소 대신 JavaScript 객체를 사용하여
+경로를 정의합니다.
+이런 객체는 일반 <Route> 요소와 동일한 속성을 갖지만 JSX가 필요하지 않습니다.
+
+```js
+import * as React from "react";
+import { useRoutes } from "react-router-dom";
+
+function App() {
+  let element = useRoutes([
+    {
+      path: "/",
+      element: <Dashboard />,
+      children: [
+        {
+          path: "messages",
+          element: <DashboardMessages />,
+        },
+      ],
+    },
+  ]);
+}
+```
+
+```
+
+```
