@@ -208,7 +208,7 @@ function App() {
 }
 ```
 
-Debounce가 무엇인가?
+# Debounce가 무엇인가?
 
 아래 그림을 보면 검색 입력에 입력할 때 입력 결과가 나타날 때까지 지연이 있습니다.
 
@@ -219,3 +219,33 @@ debounce function은 사용자가 미리 결정된 시간 동안 타이핑을 �
 이렇게 하면 UI 코드가 모든 이벤트를 처리할 필요가 없고 서버로 전송되는 API 호출 수도 크게 줄어듭니다.
 
 입력된 모든 문자를 처리하면 성능이 저하되고 백엔드에 불필요한 로드가 추가될 수 있습니다.
+
+## 모달 창 외부 클릭 시 모달 닫게 만드는 Custom Hooks 생성
+
+어디를 클릭하는지 구분(모달 창 안 or 밖)
+
+모달 창 바깥을 클릭하면 Callback 함수를 호출하는 Event를 등록해주기
+
+Callback 함수 안에서 모달 닫아주기
+
+useRef
+특정 DOM을 선택할 때 사용하는 React Hooks입니다.
+
+특정 DOM 선택하기
+
+보통 Javascript에서는 getElementById, querySelector 같은 DOM Selector 함수를 사용해서 DOM을 선택
+
+리액트에서는... ref라는 것을 이용해서 DOM을 선택
+
+DOM을 직접 선택해야 할 경우들
+
+1. 엘리먼트 크기를 가져와야 할 때
+2. 스크롤바 위치를 가져와야 할 때
+3. 엘리먼트에 포커스를 설정 해줘야 할 때 등등등
+
+useRef()를 이용해서 Ref 객체를 만들고, 이 객체를 특정 DOM에 ref 값으로 설정합니다. 이렇게 되면 Ref 객체의 .current 값이 특정 DOM을 가리키게 됩니다.
+
+```
+const ref = useRef();
+<div ref={ref}></div>
+```
